@@ -27,6 +27,9 @@ const homeDetails = async (req: Request, res: Response) => {
     //---DELETE-----
     const deleteuser = await deleteUser({ name: "Ram" })
 
+    const getDataFromStaticMethod = UserModel.myNewStaticFn();
+
+    const getMathDataFromStaticFn = UserModel.mathStaticFn()
 
     let myData = await findUser({});
     console.log(myData)
@@ -35,7 +38,11 @@ const homeDetails = async (req: Request, res: Response) => {
         y: 10
     }
     let data = sumData(ob)
-    res.json({ message: "Home Page", data, myData })
+    res.json({
+        message: "Home Page", data, myData,
+        getDataFromStaticMethod,
+        getMathDataFromStaticFn
+    })
 }
 
 export { homeDetails };

@@ -1,4 +1,4 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Model, Document } from "mongoose";
 
 export interface UserDocument extends Document {
     name: String,
@@ -10,7 +10,14 @@ interface User {
     age: number
 }
 
-const userSchema = new Schema<User>({
+//creating staic method using typescript
+
+interface UserModel extends Model<User> {
+    myNewStaticFn(): string,
+    mathStaticFn(): number
+}
+
+const userSchema = new Schema<User, UserModel>({
     name: {
         type: String,
         required: true
@@ -21,5 +28,16 @@ const userSchema = new Schema<User>({
     }
 })
 
-const UserModel = model<User>("User", userSchema);
+userSchema.static("myNewStaticFn", () => {
+    return 'Hello World';
+})
+
+userSchema.static("mathStaticFn", () => {
+    return 150;
+})
+
+
+
+
+const UserModel = model<User, UserModel>("User", userSchema);
 export default UserModel;
